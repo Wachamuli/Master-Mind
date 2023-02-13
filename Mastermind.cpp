@@ -20,9 +20,34 @@ int main()
 	cout << " 4 numeros (entre el 1-6) en el orden correcto."<<endl;
 
 	//---------------Generar 4 numeros random para la clave 4 digitos entre 1 y 6--------------
-	// = rand()
 	
-	clave[0] = 5; clave[1] = 3; clave[2] = 6; clave[3] = 1;
+	int arreglo[10];
+		int aux = 0;
+
+		srand(time(0));
+
+		for (int i = 0; i < 4; i++) {
+			aux = (1 + rand() % 6);
+
+			int aux2 = 0;
+
+			while (aux2 < i) {
+
+				if (aux != arreglo[aux2])
+					aux2++;
+
+				else {
+					aux = (1 + rand() % 6);
+					aux2 = 0;
+
+				}
+			}
+
+			clave[i] = aux;//guardamos la clave generada con esta funcion
+			//cout << clave[i] << "\n";
+		}
+	
+	//clave[0] = 5; clave[1] = 3; clave[2] = 6; clave[3] = 1;
 
 	//-------------------------------------------Comenzar juego-----------------------------
 	
