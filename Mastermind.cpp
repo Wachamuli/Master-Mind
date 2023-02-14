@@ -6,6 +6,7 @@
 // 1107531 - Gabriel Javier
 // 1103012 - William Payan
 // 1105582 - Mario Estrella
+// 1103949 - Luisander Mosquea
 
 #include <iostream>
 
@@ -25,14 +26,14 @@ int main()
 
 	//---------------Generar 4 numeros random para la clave 4 digitos entre 1 y 6--------------
 
-	int aux = 0;
-	srand(time(0));
-	for (int i = 0; i < 4; i++) {
+	int aux = 0; //aqui se almacena temporalmente el numero generado para validar antes de guardar
+	srand(time(0));//inicializamos generacion randon de numeros
+	for (int i = 0; i < 4; i++) {//para generar 4 numeros bucle
 
-		aux = (1 + rand() % 6);
-		int aux2 = 0;
+		aux = (1 + rand() % 6);//se genera el primero
+		int aux2 = 0;//usamos un contador
 
-		while (aux2 < i) {
+		while (aux2 < i) { //si pasa por aqui y es diferente de algun valor almacenado suma 1 y sale del while
 
 			if (aux != clave[aux2])
 				aux2++;
@@ -42,7 +43,7 @@ int main()
 			}
 		}
 
-		clave[i] = aux; // guardamos la clave generada con esta funcion
+		clave[i] = aux; // guardamos la clave generada con esta funcion en caso de exito
 	}
 
 	//-----------Comenzar juego------------------------------
@@ -61,11 +62,12 @@ int main()
 			buffer = atoi(Ibuffer);// convertimos caracter en entero
 			// en caso de no ser un numero el buffer entonces sera igual a 0.
 
-			bool repetido = false; //declaro una variable tipo bool para validar si el
-			//digito introducido esta repetido o no en la jugada actual
+			bool repetido = false; // declaro una variable tipo bool para validar si el
+			// digito introducido esta repetido o no en la jugada actual
 			for (int i = 0; i < 4; i++)
 			{
-				if (buffer == Jugadas[intentos][i]) { repetido = true; } //si esta repetido entonces es verdadero
+				if (buffer == Jugadas[intentos][i]) 
+					repetido = true; //si esta repetido entonces es verdadero
 			}
 
 			//validamos aca el rango y si esta repetido no nos dejara guardar tampoco
@@ -85,40 +87,40 @@ int main()
 
 		}
 
-		char pista[4]; //declaramos arreglo para las pistas de forma local
+		char pistas[4]; // declaramos arreglo para las pistas de forma local
 
 		for (int j = 0; j < 4; j++) // Bucle para que el usuario adivine el codigo
 		{
 			for (int c = 0; c < 4; c++)
 			{
-				if (jugadas[j] == clave[c]) //si el valor de la jugada coincide con alguna de la clave
+				if (jugadas[j] == clave[c]) // si el valor de la jugada coincide con alguna de la clave
 				{
-					if (j == c) //ademas si este que coincide pertenece al mismo indice o lugar
+					if (j == c) // ademas si este que coincide pertenece al mismo indice o lugar
 					{
-						pista[j] = 'C'; //acierta y esta caliente
+						pistas[j] = 'C'; // acierta y esta caliente
 					}
-					else //si solo coincide en algun lugar que no es el mismo esta frio
+					else // si solo coincide en algun lugar que no es el mismo esta frio
 					{
-						pista[j] = 'F';
+						pistas[j] = 'F';
 					}
 				}
-				else if ((pista[j] != 'F') && pista[j] != 'C') //ahora si en ningun momento esta no coincidencia no fue ni F ni C y no esta entonces sera X.
+				else if ((pistas[j] != 'F') && pistas[j] != 'C') // ahora si en ningun momento esta no coincidencia no fue ni F ni C y no esta entonces sera X.
 				{
-					pista[j] = 'X';
+					pistas[j] = 'X';
 				}
 			}
 		}
 
 		for (int j = 0; j < 4; j++) // Bucle para guardar las pistas en el arreglo resumen de Pistas
 		{
-			Pistas[intentos][j] = pista[j];
+			Pistas[intentos][j] = pistas[j];
 		}
 
 
 		//------------------Se imprime el resultado por fila--------------------------
 		for (int c = 0; c < 4; c++) // Bucle para imprimir la pista
 		{
-			cout << "[" << pista[c] << "]";
+			cout << "[" << pistas[c] << "]";
 		}
 		cout << endl;
 		for (int c = 0; c < 4; c++) // Bucle para imprimir los digitos jugados
@@ -129,11 +131,11 @@ int main()
 
 		for (int c = 0; c < 4; c++) // Bucle para contar el numero de C (acertados o calientes)
 		{
-			if (pista[c] == 'C') { nCoincidencias++; }
+			if (pistas[c] == 'C') { nCoincidencias++; }
 		}
 
 		//al final limpiamos
-		memset(pista, 0, 4);//se limpia el arreglo pista
+		memset(pistas, 0, 4);//se limpia el arreglo pista
 		memset(jugadas, 0, 4);//se limpia el arreglo jugada
 		intentos++;//agrego un intento completado
 	}
@@ -143,12 +145,12 @@ int main()
 
 	if (nCoincidencias == 4)//si las coincidencias son 4 (hay 4 C en la pista)
 	{
-		cout << "Felicitaciones, ha adivinado los siguientes 4 digitos: " << endl;
+		cout << "Felicitaciones, has adivinado los siguientes 4 digitos: " << endl;
 
 	}
 	else //en caso de que no
 	{
-		cout << "Lastima, no ha adivinado los siguientes 4 digitos: " << endl;
+		cout << "Lastima, no has adivinado los siguientes 4 digitos: " << endl;
 	}
 
 	for (int c = 0; c < 4; c++) // Imprimimos la clave de 4 digitos
